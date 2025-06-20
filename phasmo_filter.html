@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Phasmophobia Ghost Identifier</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #0d0d0d;
+      color: #eee;
+      margin: 0;
+      padding: 20px;
+    }
+    h1, h2, h3 {
+      color: #4af;
+    }
+    nav {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    nav button {
+      background: #1a1a1a;
+      color: #eee;
+      border: 1px solid #333;
+      padding: 10px 20px;
+      margin: 5px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    nav button:hover {
+      background: #333;
+    }
+    .tab {
+      display: none;
+    }
+    .tab.active {
+      display: block;
+    }
+    .container {
+      max-width: 1200px;
+      margin: auto;
+    }
+    .section {
+      margin-bottom: 30px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 10px;
+    }
+    .checkbox-group label {
+      background: #1a1a1a;
+      padding: 10px;
+      border-radius: 5px;
+      display: block;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .checkbox-group label:hover {
+      background: #2a2a2a;
+    }
+    .checkbox-group input[type="checkbox"] {
+      margin-right: 10px;
+    }
+    .results {
+      padding: 20px;
+      background: #1e1e1e;
+      border-radius: 8px;
+      border: 1px solid #333;
+    }
+    ul {
+      list-style-type: none;
+      padding-left: 0;
+    }
+    li {
+      padding: 5px 0;
+    }
+    .description {
+      font-size: 0.9em;
+      color: #aaa;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Phasmophobia Ghost Filter</h1>
+
+    <nav>
+      <button onclick="switchTab('filter')">Ghost Filter</button>
+      <button onclick="switchTab('guide')">Testing Tips & Guide</button>
+    </nav>
+
+    <div id="filter" class="tab active">
+      <div class="section">
+        <h2>Evidence</h2>
+        <div id="evidence-section" class="grid checkbox-group"></div>
+      </div>
+
+      <div class="section">
+        <h2>Traits</h2>
+        <div id="traits-section" class="grid checkbox-group"></div>
+      </div>
+
+      <div class="section results" id="results"></div>
+    </div>
+
+    <div id="guide" class="tab">
+      <div class="section">
+        <h2>How to Test Evidence Types</h2>
+        <ul>
+          <li><strong>EMF Level 5:</strong> Place an EMF Reader near active spots. EMF 5 is only from certain interactions.</li>
+          <li><strong>Spirit Box:</strong> Turn off lights, be alone, and ask questions near ghost.</li>
+          <li><strong>Ghost Orb:</strong> Use video camera in the dark, view via truck monitor or headcam.</li>
+          <li><strong>DOTS Projector:</strong> Watch from a distance or use a camera; some ghosts are only visible through camera.</li>
+          <li><strong>Fingerprints:</strong> Use UV light on doors, windows, light switches after ghost interacts.</li>
+          <li><strong>Ghost Writing:</strong> Place a writing book in active area and wait.</li>
+          <li><strong>Freezing Temperatures:</strong> Look for cold breath or use thermometer under 0°C/32°F.</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2>Beginner Tips</h2>
+        <ul>
+          <li>Always monitor sanity—ghosts hunt below 50%.</li>
+          <li>Use the journal to track found evidence and rule out ghosts.</li>
+          <li>Bring multiple types of tools and share them with teammates.</li>
+          <li>Mark cursed objects early—some force hunts or give key evidence.</li>
+          <li>Use salt, motion sensors, and smudge sticks for behavior clues.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function switchTab(id) {
+      document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+
+    const ghosts = [
+      { name: "Spirit", evidence: ["EMF Level 5", "Ghost Writing", "Spirit Box"], traits: ["long smudge timer (180s)"] },
+      { name: "Wraith", evidence: ["EMF Level 5", "Spirit Box", "DOTS Projector"], traits: ["teleports (EMF2)", "no salt footsteps"] },
+      { name: "Phantom", evidence: ["Spirit Box", "Ghost Orb", "DOTS Projector"], traits: ["long blink/hard to see hunt", "disappears when photo taken"] },
+      { name: "Poltergeist", evidence: ["Spirit Box", "Ghost Writing", "Fingerprints"], traits: ["throws multiple items fast", "high throw frequency"] },
+      { name: "Banshee", evidence: ["Fingerprints", "Ghost Orb", "DOTS Projector"], traits: ["one-player target hunts", "parabmic scream", "singing events"] },
+      { name: "Jinn", evidence: ["EMF Level 5", "Spirit Box", "Freezing Temperatures"], traits: ["faster with breaker on", "zaps sanity at breaker"] },
+      { name: "Mare", evidence: ["Spirit Box", "Ghost Orb", "Ghost Writing"], traits: ["prefers darkness", "turns off lights"] },
+      { name: "Revenant", evidence: ["Ghost Orb", "Ghost Writing", "Freezing Temperatures"], traits: ["slow when not hunting", "very fast when hunting"] },
+      { name: "Shade", evidence: ["EMF Level 5", "Ghost Writing", "Freezing Temperatures"], traits: ["shy", "no activity with players around"] },
+      { name: "Demon", evidence: ["Ghost Writing", "Spirit Box", "Fingerprints"], traits: ["early hunting", "crucifix effective at longer range"] },
+      { name: "Yurei", evidence: ["Ghost Orb", "Freezing Temperatures", "DOTS Projector"], traits: ["strong sanity drain", "closes doors"] },
+      { name: "Oni", evidence: ["EMF Level 5", "Freezing Temperatures", "DOTS Projector"], traits: ["more visible", "active and throws items"] },
+      { name: "Yokai", evidence: ["Spirit Box", "Ghost Orb", "DOTS Projector"], traits: ["hunts from player voices", "can't hear well during hunt"] },
+      { name: "Hantu", evidence: ["Ghost Orb", "Freezing Temperatures", "Fingerprints"], traits: ["colder = faster", "breath visible in freezing rooms"] },
+      { name: "Goryo", evidence: ["EMF Level 5", "Fingerprints", "DOTS Projector"], traits: ["DOTS only visible on camera", "doesn't roam"] },
+      { name: "Myling", evidence: ["EMF Level 5", "Fingerprints", "Ghost Writing"], traits: ["quiet footstep range", "more parabolic sounds"] },
+      { name: "Onryo", evidence: ["Spirit Box", "Ghost Orb", "Freezing Temperatures"], traits: ["blows out candles", "hunts after 3 extinguishes"] },
+      { name: "The Twins", evidence: ["EMF Level 5", "Spirit Box", "Freezing Temperatures"], traits: ["interacts in two spots", "different speeds during hunt"] },
+      { name: "Raiju", evidence: ["EMF Level 5", "Ghost Orb", "DOTS Projector"], traits: ["faster with electronics", "causes device interference"] },
+      { name: "Obake", evidence: ["EMF Level 5", "Ghost Orb", "Fingerprints"], traits: ["rare fingerprint shape", "occasionally hides fingerprints"] },
+      { name: "The Mimic", evidence: ["Spirit Box", "Fingerprints", "Freezing Temperatures"], traits: ["mimics other ghosts", "has Ghost Orb as fake evidence"] },
+      { name: "Moroi", evidence: ["Spirit Box", "Ghost Writing", "Freezing Temperatures"], traits: ["curses players", "faster at low sanity"] },
+      { name: "Deogen", evidence: ["Spirit Box", "Ghost Writing", "DOTS Projector"], traits: ["always knows location", "very slow when near"] },
+      { name: "Thaye", evidence: ["Ghost Orb", "Ghost Writing", "DOTS Projector"], traits: ["ages and weakens over time"] }
+    ];
+
+    const allEvidence = new Set();
+    const allTraits = new Set();
+    ghosts.forEach(g => {
+      g.evidence.forEach(e => allEvidence.add(e));
+      g.traits.forEach(t => allTraits.add(t));
+    });
+
+    function createChecklist(id, items, className) {
+      const container = document.getElementById(id);
+      [...items].sort().forEach(item => {
+        const label = document.createElement("label");
+        const input = document.createElement("input");
+        input.type = "checkbox";
+        input.value = item;
+        input.classList.add(className);
+        input.addEventListener("change", filterGhosts);
+        label.appendChild(input);
+        label.append(" " + item);
+        container.appendChild(label);
+      });
+    }
+
+    function filterGhosts() {
+      const selectedEvidence = Array.from(document.querySelectorAll(".evidence:checked")).map(e => e.value);
+      const selectedTraits = Array.from(document.querySelectorAll(".trait:checked")).map(e => e.value);
+
+      const matches = ghosts.filter(g =>
+        selectedEvidence.every(ev => g.evidence.includes(ev)) &&
+        selectedTraits.every(tr => g.traits.includes(tr))
+      );
+
+      const resultDiv = document.getElementById("results");
+      if (matches.length) {
+        resultDiv.innerHTML = `<h3>Matching Ghosts:</h3><ul>${matches.map(g => `<li>${g.name}</li>`).join('')}</ul>`;
+      } else {
+        resultDiv.innerHTML = "<p>No ghosts match your selected evidence and traits.</p>";
+      }
+    }
+
+    createChecklist("evidence-section", allEvidence, "evidence");
+    createChecklist("traits-section", allTraits, "trait");
+  </script>
+</body>
+</html>
