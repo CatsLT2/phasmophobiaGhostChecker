@@ -63,6 +63,11 @@
     .checkbox-group input[type="checkbox"] {
       margin-right: 10px;
     }
+    .trait-description, .evidence-description {
+      font-size: 0.85em;
+      color: #bbb;
+      margin-top: 5px;
+    }
     .results {
       padding: 20px;
       background: #1e1e1e;
@@ -76,15 +81,11 @@
     li {
       padding: 5px 0;
     }
-    .description {
-      font-size: 0.9em;
-      color: #aaa;
-    }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Cats NOOB Helper ;)</h1>
+    <h1>Phasmophobia Ghost Filter</h1>
 
     <nav>
       <button onclick="switchTab('filter')">Ghost Filter</button>
@@ -114,9 +115,9 @@
           <li><strong>Ghost Orb:</strong> Use video camera in the dark, view via truck monitor or headcam.</li>
           <li><strong>DOTS Projector:</strong> Watch from a distance or use a camera; some ghosts are only visible through camera.</li>
           <li><strong>Fingerprints:</strong> Use UV light on doors, windows, light switches after ghost interacts.</li>
-          <li><strong>Ghost Writing:</strong> Place a writing book in active area and wait.</li>
+          <li><strong>Ghost Writing:</strong> Place a writing book in active area and wait for writing. Ghosts write in it randomly.</li>
           <li><strong>Freezing Temperatures:</strong> Look for cold breath or use thermometer under 0°C/32°F.</li>
-          <li><strong>Incense:</strong> When used you willhave a short time that the ghost is repeled, can help when running away ~ 5 seconds.</li>
+          <li><strong>Incense:</strong> When used you will have a short time that the ghost is repelled, can help when running away ~ 5 seconds.</li>
         </ul>
       </div>
 
@@ -130,83 +131,125 @@
           <li>Use salt, motion sensors, and smudge sticks for behavior clues.</li>
         </ul>
       </div>
+
+      <div class="section">
+        <h2>How to Identify <span style="color:#ff8">The Mimic</span></h2>
+        <ul>
+          <li><strong>Real Evidence:</strong> Spirit Box, Fingerprints, Freezing Temperatures</li>
+          <li><strong>Fake Evidence:</strong> Ghost Orb — it always shows orbs, but this is not real evidence for The Mimic.</li>
+          <li><strong>Behavior:</strong> The Mimic copies behaviors from other ghosts, including traits and abilities.</li>
+          <li><strong>Tips to Identify:</strong>
+            <ul>
+              <li>If the ghost seems to switch traits often (e.g., speeds up, then slows down), suspect a Mimic.</li>
+              <li>Look for <strong>Ghost Orbs</strong> + <strong>3 other pieces of evidence</strong>. Only The Mimic does this.</li>
+              <li>Use the <strong>Spirit Box</strong>, <strong>UV light</strong>, and <strong>Thermometer</strong> to confirm its real trio.</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
     </div>
-  </div>
 
-  <script>
-    function switchTab(id) {
-      document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-    }
-
-    const ghosts = [
-      { name: "Spirit", evidence: ["EMF Level 5", "Ghost Writing", "Spirit Box"], traits: ["long smudge timer (180s)"] },
-      { name: "Wraith", evidence: ["EMF Level 5", "Spirit Box", "DOTS Projector"], traits: ["teleports (EMF2)", "no salt footsteps"] },
-      { name: "Phantom", evidence: ["Spirit Box", "Ghost Orb", "DOTS Projector"], traits: ["long blink/hard to see hunt", "disappears when photo taken"] },
-      { name: "Poltergeist", evidence: ["Spirit Box", "Ghost Writing", "Fingerprints"], traits: ["throws multiple items fast", "high throw frequency"] },
-      { name: "Banshee", evidence: ["Fingerprints", "Ghost Orb", "DOTS Projector"], traits: ["one-player target hunts", "parabmic scream", "singing events"] },
-      { name: "Jinn", evidence: ["EMF Level 5", "Spirit Box", "Freezing Temperatures"], traits: ["faster with breaker on", "zaps sanity at breaker"] },
-      { name: "Mare", evidence: ["Spirit Box", "Ghost Orb", "Ghost Writing"], traits: ["prefers darkness", "turns off lights"] },
-      { name: "Revenant", evidence: ["Ghost Orb", "Ghost Writing", "Freezing Temperatures"], traits: ["slow when not hunting", "very fast when hunting"] },
-      { name: "Shade", evidence: ["EMF Level 5", "Ghost Writing", "Freezing Temperatures"], traits: ["shy", "no activity with players around"] },
-      { name: "Demon", evidence: ["Ghost Writing", "Spirit Box", "Fingerprints"], traits: ["early hunting", "crucifix effective at longer range"] },
-      { name: "Yurei", evidence: ["Ghost Orb", "Freezing Temperatures", "DOTS Projector"], traits: ["strong sanity drain", "closes doors"] },
-      { name: "Oni", evidence: ["EMF Level 5", "Freezing Temperatures", "DOTS Projector"], traits: ["more visible", "active and throws items"] },
-      { name: "Yokai", evidence: ["Spirit Box", "Ghost Orb", "DOTS Projector"], traits: ["hunts from player voices", "can't hear well during hunt"] },
-      { name: "Hantu", evidence: ["Ghost Orb", "Freezing Temperatures", "Fingerprints"], traits: ["colder = faster", "breath visible in freezing rooms"] },
-      { name: "Goryo", evidence: ["EMF Level 5", "Fingerprints", "DOTS Projector"], traits: ["DOTS only visible on camera", "doesn't roam"] },
-      { name: "Myling", evidence: ["EMF Level 5", "Fingerprints", "Ghost Writing"], traits: ["quiet footstep range", "more parabolic sounds"] },
-      { name: "Onryo", evidence: ["Spirit Box", "Ghost Orb", "Freezing Temperatures"], traits: ["blows out candles", "hunts after 3 extinguishes"] },
-      { name: "The Twins", evidence: ["EMF Level 5", "Spirit Box", "Freezing Temperatures"], traits: ["interacts in two spots", "different speeds during hunt"] },
-      { name: "Raiju", evidence: ["EMF Level 5", "Ghost Orb", "DOTS Projector"], traits: ["faster with electronics", "causes device interference"] },
-      { name: "Obake", evidence: ["EMF Level 5", "Ghost Orb", "Fingerprints"], traits: ["rare fingerprint shape", "occasionally hides fingerprints"] },
-      { name: "The Mimic", evidence: ["Spirit Box", "Fingerprints", "Freezing Temperatures"], traits: ["mimics other ghosts", "has Ghost Orb as fake evidence"] },
-      { name: "Moroi", evidence: ["Spirit Box", "Ghost Writing", "Freezing Temperatures"], traits: ["curses players", "faster at low sanity"] },
-      { name: "Deogen", evidence: ["Spirit Box", "Ghost Writing", "DOTS Projector"], traits: ["always knows location", "very slow when near"] },
-      { name: "Thaye", evidence: ["Ghost Orb", "Ghost Writing", "DOTS Projector"], traits: ["ages and weakens over time"] }
-    ];
-
-    const allEvidence = new Set();
-    const allTraits = new Set();
-    ghosts.forEach(g => {
-      g.evidence.forEach(e => allEvidence.add(e));
-      g.traits.forEach(t => allTraits.add(t));
-    });
-
-    function createChecklist(id, items, className) {
-      const container = document.getElementById(id);
-      [...items].sort().forEach(item => {
-        const label = document.createElement("label");
-        const input = document.createElement("input");
-        input.type = "checkbox";
-        input.value = item;
-        input.classList.add(className);
-        input.addEventListener("change", filterGhosts);
-        label.appendChild(input);
-        label.append(" " + item);
-        container.appendChild(label);
-      });
-    }
-
-    function filterGhosts() {
-      const selectedEvidence = Array.from(document.querySelectorAll(".evidence:checked")).map(e => e.value);
-      const selectedTraits = Array.from(document.querySelectorAll(".trait:checked")).map(e => e.value);
-
-      const matches = ghosts.filter(g =>
-        selectedEvidence.every(ev => g.evidence.includes(ev)) &&
-        selectedTraits.every(tr => g.traits.includes(tr))
-      );
-
-      const resultDiv = document.getElementById("results");
-      if (matches.length) {
-        resultDiv.innerHTML = `<h3>Matching Ghosts:</h3><ul>${matches.map(g => `<li>${g.name}</li>`).join('')}</ul>`;
-      } else {
-        resultDiv.innerHTML = "<p>No ghosts match your selected evidence and traits.</p>";
+    <script>
+      function switchTab(id) {
+        document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
       }
-    }
 
-    createChecklist("evidence-section", allEvidence, "evidence");
-    createChecklist("traits-section", allTraits, "trait");
-  </script>
+      const evidenceDescriptions = {
+        "EMF Level 5": "Strong ghost interaction; shows red on EMF.",
+        "Spirit Box": "Ghost speaks through the box when asked questions.",
+        "Ghost Orb": "Floating orbs visible on night vision camera.",
+        "DOTS Projector": "Ghost silhouette crosses through green laser grid.",
+        "Fingerprints": "UV reveals prints on touched surfaces.",
+        "Ghost Writing": "Ghost writes in a placed book.",
+        "Freezing Temperatures": "See your breath or get subzero readings."
+      };
+
+      const traitDescriptions = {
+        "Long Smudge Timer": "Smudging the ghost prevents hunting for 180s instead of 90s.",
+        "Fast When Seen": "Ghost gets faster when you're in line of sight.",
+        "Hates Crucifix": "Crucifixes are more effective against this ghost.",
+        "Shy": "Ghost is less active when you're in the room.",
+        "No Footprints": "Ghost doesn't leave salt footprints.",
+        "Mimics Others": "This ghost can behave like other types."
+      };
+
+      const ghosts = [
+        { name: "Spirit", evidence: ["EMF Level 5", "Spirit Box", "Ghost Writing"], traits: ["Standard"] },
+        { name: "Wraith", evidence: ["EMF Level 5", "Spirit Box", "DOTS Projector"], traits: ["No Footprints"] },
+        { name: "Phantom", evidence: ["Spirit Box", "Fingerprints", "DOTS Projector"], traits: ["Shy"] },
+        { name: "Poltergeist", evidence: ["Spirit Box", "Fingerprints", "Ghost Writing"], traits: [] },
+        { name: "Banshee", evidence: ["Ghost Orb", "Fingerprints", "DOTS Projector"], traits: ["Shy"] },
+        { name: "Jinn", evidence: ["EMF Level 5", "Freezing Temperatures", "Fingerprints"], traits: ["Fast When Seen"] },
+        { name: "Mare", evidence: ["Ghost Orb", "Spirit Box", "Ghost Writing"], traits: ["Hates Crucifix"] },
+        { name: "Revenant", evidence: ["Ghost Orb", "Ghost Writing", "Freezing Temperatures"], traits: ["Slow unless it sees you"] },
+        { name: "Shade", evidence: ["EMF Level 5", "Ghost Writing", "Freezing Temperatures"], traits: ["Shy"] },
+        { name: "Demon", evidence: ["Fingerprints", "Ghost Writing", "Freezing Temperatures"], traits: ["Hates Crucifix"] },
+        { name: "Yurei", evidence: ["Ghost Orb", "Freezing Temperatures", "DOTS Projector"], traits: ["Drains sanity faster"] },
+        { name: "Oni", evidence: ["EMF Level 5", "Freezing Temperatures", "DOTS Projector"], traits: ["More active with players"] },
+        { name: "Hantu", evidence: ["Fingerprints", "Ghost Orb", "Freezing Temperatures"], traits: ["Faster in cold rooms"] },
+        { name: "Goryo", evidence: ["EMF Level 5", "Fingerprints", "DOTS Projector"], traits: ["Only visible on camera"] },
+        { name: "Myling", evidence: ["EMF Level 5", "Fingerprints", "Ghost Writing"], traits: ["Quieter footsteps"] },
+        { name: "Onryo", evidence: ["Spirit Box", "Ghost Orb", "Freezing Temperatures"], traits: ["Triggered by fire"] },
+        { name: "The Twins", evidence: ["EMF Level 5", "Spirit Box", "Freezing Temperatures"], traits: ["Different activity locations"] },
+        { name: "Raiju", evidence: ["EMF Level 5", "Ghost Orb", "DOTS Projector"], traits: ["Faster near electronics"] },
+        { name: "Obake", evidence: ["EMF Level 5", "Ghost Orb", "Fingerprints"], traits: ["Rare fingerprints"] },
+        { name: "The Mimic", evidence: ["Spirit Box", "Fingerprints", "Freezing Temperatures"], traits: ["Mimics Others"] },
+        { name: "Moroi", evidence: ["Spirit Box", "Ghost Writing", "Freezing Temperatures"], traits: ["Curses players"] },
+        { name: "Deogen", evidence: ["Spirit Box", "Ghost Writing", "DOTS Projector"], traits: ["Sees through hiding"] },
+        { name: "Thaye", evidence: ["Ghost Orb", "Ghost Writing", "DOTS Projector"], traits: ["Ages over time"] },
+        { name: "The Mimic", evidence: ["Spirit Box", "Fingerprints", "Freezing Temperatures", "Ghost Orb"], traits: ["Mimics Others"] }
+      ];
+
+      const allEvidence = new Set();
+      const allTraits = new Set();
+      ghosts.forEach(g => {
+        g.evidence.forEach(e => allEvidence.add(e));
+        g.traits.forEach(t => allTraits.add(t));
+      });
+
+      function createChecklist(id, items, className, descriptions) {
+        const container = document.getElementById(id);
+        [...items].sort().forEach(item => {
+          const wrapper = document.createElement("div");
+          const label = document.createElement("label");
+          const input = document.createElement("input");
+          input.type = "checkbox";
+          input.value = item;
+          input.classList.add(className);
+          input.addEventListener("change", filterGhosts);
+          label.appendChild(input);
+          label.append(" " + item);
+
+          const desc = document.createElement("div");
+          desc.className = className === 'evidence' ? 'evidence-description' : 'trait-description';
+          desc.innerText = descriptions[item] || "No description available.";
+
+          wrapper.appendChild(label);
+          wrapper.appendChild(desc);
+          container.appendChild(wrapper);
+        });
+      }
+
+      function filterGhosts() {
+        const selectedEvidence = Array.from(document.querySelectorAll(".evidence:checked")).map(e => e.value);
+        const selectedTraits = Array.from(document.querySelectorAll(".trait:checked")).map(e => e.value);
+
+        const matches = ghosts.filter(g =>
+          selectedEvidence.every(ev => g.evidence.includes(ev)) &&
+          selectedTraits.every(tr => g.traits.includes(tr))
+        );
+
+        const resultDiv = document.getElementById("results");
+        if (matches.length) {
+          resultDiv.innerHTML = `<h3>Matching Ghosts:</h3><ul>${matches.map(g => `<li>${g.name}</li>`).join('')}</ul>`;
+        } else {
+          resultDiv.innerHTML = "<p>No ghosts match your selected evidence and traits.</p>";
+        }
+      }
+
+      createChecklist("evidence-section", allEvidence, "evidence", evidenceDescriptions);
+      createChecklist("traits-section", allTraits, "trait", traitDescriptions);
+    </script>
 </body>
 </html>
