@@ -3,253 +3,258 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Phasmophobia Ghost Identifier</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #0d0d0d;
-      color: #eee;
-      margin: 0;
-      padding: 20px;
-    }
-    h1, h2, h3 {
-      color: #4af;
-    }
-    nav {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    nav button {
-      background: #1a1a1a;
-      color: #eee;
-      border: 1px solid #333;
-      padding: 10px 20px;
-      margin: 5px;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-    nav button:hover {
-      background: #333;
-    }
-    .tab {
-      display: none;
-    }
-    .tab.active {
-      display: block;
-    }
-    .container {
-      max-width: 1200px;
-      margin: auto;
-    }
-    .section {
-      margin-bottom: 30px;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 10px;
-    }
-    .checkbox-group label {
-      background: #1a1a1a;
-      padding: 10px;
-      border-radius: 5px;
-      display: block;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-    .checkbox-group label:hover {
-      background: #2a2a2a;
-    }
-    .checkbox-group input[type="checkbox"] {
-      margin-right: 10px;
-    }
-    .trait-description, .evidence-description {
-      font-size: 0.85em;
-      color: #bbb;
-      margin-top: 5px;
-    }
-    .results {
-      padding: 20px;
-      background: #1e1e1e;
-      border-radius: 8px;
-      border: 1px solid #333;
-    }
-    ul {
-      list-style-type: none;
-      padding-left: 0;
-    }
-    li {
-      padding: 5px 0;
-    }
-  </style>
+  <title>Phasmophobia Ghost Identifier & Field Companion</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
 <body>
-  <div class="container">
-    <h1>Phasmophobia Ghost Filter</h1>
 
-    <nav>
-      <button onclick="switchTab('filter')">Ghost Filter</button>
-      <button onclick="switchTab('guide')">Testing Tips & Guide</button>
-    </nav>
-
-    <div id="filter" class="tab active">
-      <div class="section">
-        <h2>Evidence</h2>
-        <div id="evidence-section" class="grid checkbox-group"></div>
-      </div>
-
-      <div class="section">
-        <h2>Traits</h2>
-        <div id="traits-section" class="grid checkbox-group"></div>
-      </div>
-
-      <div class="section results" id="results"></div>
+  <!-- Top Bar / App Header -->
+  <header class="app-header">
+    <div class="header-left">
+      <h1><i class="fa-solid fa-ghost"></i> PHASMOPHOBIA JOURNAL</h1>
+      <span class="badge">v2.5 Field Edition</span>
     </div>
+    
+    <div class="header-controls">
+      <button id="pip-btn" class="btn btn-primary" title="Pin Overlay Window over Game (Chrome/Edge)">
+        <i class="fa-solid fa-window-restore"></i> Pin Overlay (PiP)
+      </button>
+      <button id="reset-btn" class="btn btn-danger" title="Reset all evidence (Hotkey: R)">
+        <i class="fa-solid fa-rotate-left"></i> Reset
+      </button>
+      <button id="hotkey-toggle-btn" class="btn btn-secondary" title="View Keybinds (Hotkey: ?)">
+        <i class="fa-solid fa-keyboard"></i> Hotkeys
+      </button>
+    </div>
+  </header>
 
-    <div id="guide" class="tab">
-      <div class="section">
-        <h2>How to Test Evidence Types</h2>
-        <ul>
-          <li><strong>EMF Level 5:</strong> Place an EMF Reader near active spots. EMF 5 is only from certain interactions.</li>
-          <li><strong>Spirit Box:</strong> Turn off lights, be alone, and ask questions near ghost.</li>
-          <li><strong>Ghost Orb:</strong> Use video camera in the dark, view via truck monitor or headcam.</li>
-          <li><strong>DOTS Projector:</strong> Watch from a distance or use a camera; some ghosts are only visible through camera.</li>
-          <li><strong>Fingerprints:</strong> Use UV light on doors, windows, light switches after ghost interacts.</li>
-          <li><strong>Ghost Writing:</strong> Place a writing book in active area and wait for writing. Ghosts write in it randomly.</li>
-          <li><strong>Freezing Temperatures:</strong> Look for cold breath or use thermometer under 0°C/32°F.</li>
-          <li><strong>Incense:</strong> When used you will have a short time that the ghost is repelled, can help when running away ~ 5 seconds.</li>
-        </ul>
+  <!-- Navigation Tabs -->
+  <nav class="nav-tabs">
+    <button class="nav-btn active" data-tab="tab-journal">
+      <i class="fa-solid fa-book-skull"></i> Ghost Identifier
+    </button>
+    <button class="nav-btn" data-tab="tab-tools">
+      <i class="fa-solid fa-stopwatch"></i> Speed & Timer Tools
+    </button>
+    <button class="nav-btn" data-tab="tab-guides">
+      <i class="fa-solid fa-graduation-cap"></i> Evidence & Cursed Guide
+    </button>
+  </nav>
+
+  <!-- Main Container -->
+  <main class="main-container">
+
+    <!-- ================= TAB 1: GHOST IDENTIFIER ================= -->
+    <section id="tab-journal" class="tab-content active">
+      
+      <!-- Top Grid: Evidence & Controls -->
+      <div class="journal-layout">
+        
+        <!-- Left: Evidence Selection (3-State Buttons) -->
+        <div class="card evidence-card">
+          <div class="card-header">
+            <h2><i class="fa-solid fa-fingerprint"></i> Evidence Tracker</h2>
+            <small>Click to toggle: <span class="text-green">Found</span> ➔ <span class="text-red">Ruled Out</span> ➔ Unset</small>
+          </div>
+          <div id="evidence-grid" class="evidence-grid"></div>
+        </div>
+
+        <!-- Right: Speed, Sanity & Special Filters -->
+        <div class="card filters-card">
+          <div class="card-header">
+            <h2><i class="fa-solid fa-sliders"></i> Hunt Filters</h2>
+          </div>
+          <div class="filter-group">
+            <label><i class="fa-solid fa-gauge-high"></i> Ghost Hunt Speed:</label>
+            <select id="filter-speed" class="form-control">
+              <option value="all">Any Speed</option>
+              <option value="slow">Slow (&lt; 1.7 m/s)</option>
+              <option value="normal">Normal (1.7 m/s)</option>
+              <option value="fast">Fast / Accelerating (&gt; 1.7 m/s)</option>
+              <option value="variable">Variable / Conditional</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label><i class="fa-solid fa-brain"></i> Early/Late Hunter Sanity:</label>
+            <select id="filter-sanity" class="form-control">
+              <option value="all">Any Sanity Threshold</option>
+              <option value="early">Early Hunter (&gt; 50%)</option>
+              <option value="standard">Standard (50%)</option>
+              <option value="late">Late Hunter (&lt; 50%)</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label class="checkbox-label">
+              <input type="checkbox" id="filter-mimic-orbs" />
+              <span>Include Mimic (Fake Orbs)</span>
+            </label>
+          </div>
+        </div>
+
       </div>
 
-      <div class="section">
-        <h2>Beginner Tips</h2>
-        <ul>
-          <li>Always monitor sanity—ghosts hunt below 50%.</li>
-          <li>Use the journal to track found evidence and rule out ghosts.</li>
-          <li>Bring multiple types of tools and share them with teammates.</li>
-          <li>Mark cursed objects early—some force hunts or give key evidence.</li>
-          <li>Use salt, motion sensors, and smudge sticks for behavior clues.</li>
-        </ul>
+      <!-- Ghost Match Results Header & Counter -->
+      <div class="results-bar card">
+        <div class="results-info">
+          <h3>Matching Ghosts (<span id="match-count">0</span>/24)</h3>
+        </div>
+        <div id="conflict-warning" class="warning-banner hidden">
+          <i class="fa-solid fa-triangle-exclamation"></i> Evidence combo impossible! Double-check ruled-out or found items.
+        </div>
       </div>
 
-      <div class="section">
-        <h2>How to Identify <span style="color:#ff8">The Mimic</span></h2>
-        <ul>
-          <li><strong>Real Evidence:</strong> Spirit Box, Fingerprints, Freezing Temperatures</li>
-          <li><strong>Fake Evidence:</strong> Ghost Orb — it always shows orbs, but this is not real evidence for The Mimic.</li>
-          <li><strong>Behavior:</strong> The Mimic copies behaviors from other ghosts, including traits and abilities.</li>
-          <li><strong>Tips to Identify:</strong>
+      <!-- Ghost Cards Grid -->
+      <div id="ghosts-grid" class="ghosts-grid"></div>
+
+    </section>
+
+    <!-- ================= TAB 2: SPEED & TIMER TOOLS ================= -->
+    <section id="tab-tools" class="tab-content">
+      <div class="tools-layout">
+        
+        <!-- Footstep Metronome / Speed Tapper -->
+        <div class="card tool-card">
+          <h2><i class="fa-solid fa-drum"></i> Footstep Speed Metronome / Tapper</h2>
+          <p>Tap <kbd>SPACE</kbd> or click the tapper button in sync with the ghost's footsteps during a hunt to measure speed (m/s).</p>
+          
+          <div class="tapper-display">
+            <button id="tap-btn" class="tap-button">
+              <i class="fa-solid fa-shoe-prints"></i>
+              <span>TAP HERE / PRESS SPACE</span>
+            </button>
+            <div class="speed-metrics">
+              <div class="metric">
+                <span class="metric-label">Estimated Speed</span>
+                <span id="speed-result-ms" class="metric-value">0.00 <small>m/s</small></span>
+              </div>
+              <div class="metric">
+                <span class="metric-label">BPM</span>
+                <span id="speed-result-bpm" class="metric-value">0</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="speed-reference">
+            <h4>Quick Speed Reference Chart:</h4>
             <ul>
-              <li>If the ghost seems to switch traits often (e.g., speeds up, then slows down), suspect a Mimic.</li>
-              <li>Look for <strong>Ghost Orbs</strong> + <strong>3 other pieces of evidence</strong>. Only The Mimic does this.</li>
-              <li>Use the <strong>Spirit Box</strong>, <strong>UV light</strong>, and <strong>Thermometer</strong> to confirm its real trio.</li>
+              <li><strong>Standard Normal Speed:</strong> 1.7 m/s (130-150 BPM)</li>
+              <li><strong>Slow Ghosts (Revenant unseen, Hantu warm, Deogen close):</strong> 0.4 – 1.0 m/s</li>
+              <li><strong>Fast Ghosts (Revenant in LoS, Raiju near tech, Hantu cold):</strong> 2.2 – 3.0 m/s</li>
             </ul>
-          </li>
+          </div>
+        </div>
+
+        <!-- Incense / Smudge Timer -->
+        <div class="card tool-card">
+          <h2><i class="fa-solid fa-fire-burner"></i> Incense / Smudge Timer</h2>
+          <p>Start when you smudge the ghost during or outside a hunt. Time how long before it can hunt again.</p>
+          
+          <div class="timer-display">
+            <div id="smudge-timer" class="timer-clock">00:00.0</div>
+            <div class="timer-controls">
+              <button id="timer-start" class="btn btn-success"><i class="fa-solid fa-play"></i> Start</button>
+              <button id="timer-pause" class="btn btn-warning"><i class="fa-solid fa-pause"></i> Pause</button>
+              <button id="timer-reset" class="btn btn-danger"><i class="fa-solid fa-stop"></i> Reset</button>
+            </div>
+          </div>
+
+          <div class="timer-milestones">
+            <div class="milestone-box" id="ms-60">
+              <strong>60s: Demon</strong>
+              <span>If it hunts before 60s, it's a Demon using an ability.</span>
+            </div>
+            <div class="milestone-box" id="ms-90">
+              <strong>90s: Standard</strong>
+              <span>Standard ghost safe window ends here.</span>
+            </div>
+            <div class="milestone-box" id="ms-180">
+              <strong>180s: Spirit</strong>
+              <span>If no hunt for 180s, high chance it's a Spirit.</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= TAB 3: GUIDES ================= -->
+    <section id="tab-guides" class="tab-content">
+      <div class="card guide-card">
+        <h2><i class="fa-solid fa-book-open"></i> Evidence Testing Procedures</h2>
+        <div class="guide-grid">
+          <div class="guide-item">
+            <h4><i class="fa-solid fa-bolt"></i> EMF Level 5</h4>
+            <p>Triggers on physical interactions, throw events, or window dabs (25% chance). Must register a solid 5 on the handheld meter.</p>
+          </div>
+          <div class="guide-item">
+            <h4><i class="fa-solid fa-radio"></i> Spirit Box</h4>
+            <p>Must be in the ghost room/near ghost with lights OFF in the room. Ask: "Where are you?", "How old are you?", "Are you friendly?".</p>
+          </div>
+          <div class="guide-item">
+            <h4><i class="fa-solid fa-eye"></i> DOTS Projector</h4>
+            <p>Ghost silhouette crosses green laser grid. Note: Goryo DOTS is only visible through a video camera when no players are in the room.</p>
+          </div>
+          <div class="guide-item">
+            <h4><i class="fa-solid fa-snowflake"></i> Freezing Temperatures</h4>
+            <p>Requires thermometer reading below 0°C (32°F) or visible freeze breath. Breath can appear at slightly higher temps depending on update rules.</p>
+          </div>
+          <div class="guide-item">
+            <h4><i class="fa-solid fa-hand"></i> UV / Fingerprints</h4>
+            <p>Check doors, light switches, windows, and salt footprints using UV light or Glowstick within 2 minutes of interaction.</p>
+          </div>
+          <div class="guide-item">
+            <h4><i class="fa-solid fa-book"></i> Ghost Writing</h4>
+            <p>Place book near active area. Ghost will write or throw it. If it throws without writing, rule out Ghost Writing (except if tricked).</p>
+          </div>
+        </div>
+
+        <h2 class="mt-20"><i class="fa-solid fa-ankh"></i> Cursed Possessions Quick Reference</h2>
+        <div class="guide-grid">
+          <div class="guide-item">
+            <h4>Tarot Cards</h4>
+            <p>10 cards per deck. <strong>Death:</strong> Cursed Hunt. <strong>The Moon:</strong> 0% Sanity. <strong>Sun:</strong> 100% Sanity. <strong>The Fool:</strong> Fake card trick. <strong>The Hanged Man:</strong> Instant death.</p>
+          </div>
+          <div class="guide-item">
+            <h4>Ouija Board</h4>
+            <p>Ask: "Where is the bone?", "Where are you?", "What is my sanity?". Remember to say "Goodbye" to avoid breaking the board and triggering a hunt.</p>
+          </div>
+          <div class="guide-item">
+            <h4>Haunted Mirror</h4>
+            <p>Shows a view of the ghost room in real-time. Drains sanity rapidly (~10%/sec). Breaks when sanity reaches 0.</p>
+          </div>
+          <div class="guide-item">
+            <h4>Music Box</h4>
+            <p>Plays tune. Ghost sings along and walks toward box. If ghost touches player or walks 5+ seconds, initiates cursed hunt.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Hotkey Overlay Modal -->
+  <div id="hotkey-modal" class="modal-overlay hidden">
+    <div class="modal-content card">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-keyboard"></i> Keyboard Shortcuts</h3>
+        <button id="close-hotkey-modal" class="btn-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <ul class="hotkey-list">
+          <li><kbd>1</kbd> - <kbd>7</kbd> : Toggle Evidence (EMF, Spirit Box, Fingerprints, Orbs, Writing, Freezing, DOTS)</li>
+          <li><kbd>R</kbd> : Reset all Evidence & Filters</li>
+          <li><kbd>S</kbd> : Toggle Smudge Timer (Start / Pause)</li>
+          <li><kbd>SPACE</kbd> : Tap Speed Metronome</li>
+          <li><kbd>Shift</kbd> + <kbd>`</kbd> / <kbd>F2</kbd> : Focus / Launch PiP Window</li>
+          <li><kbd>?</kbd> / <kbd>H</kbd> : Open this Keyboard Reference</li>
         </ul>
       </div>
     </div>
+  </div>
 
-    <script>
-      function switchTab(id) {
-        document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
-        document.getElementById(id).classList.add('active');
-      }
-
-      const evidenceDescriptions = {
-        "EMF Level 5": "Strong ghost interaction; shows red on EMF.",
-        "Spirit Box": "Ghost speaks through the box when asked questions.",
-        "Ghost Orb": "Floating orbs visible on night vision camera.",
-        "DOTS Projector": "Ghost silhouette crosses through green laser grid.",
-        "Fingerprints": "UV reveals prints on touched surfaces.",
-        "Ghost Writing": "Ghost writes in a placed book.",
-        "Freezing Temperatures": "See your breath or get subzero readings."
-      };
-
-      const traitDescriptions = {
-        "Long Smudge Timer": "Smudging the ghost prevents hunting for 180s instead of 90s.",
-        "Fast When Seen": "Ghost gets faster when you're in line of sight.",
-        "Hates Crucifix": "Crucifixes are more effective against this ghost.",
-        "Shy": "Ghost is less active when you're in the room.",
-        "No Footprints": "Ghost doesn't leave salt footprints.",
-        "Mimics Others": "This ghost can behave like other types."
-      };
-
-      const ghosts = [
-        { name: "Spirit", evidence: ["EMF Level 5", "Spirit Box", "Ghost Writing"], traits: ["Standard"] },
-        { name: "Wraith", evidence: ["EMF Level 5", "Spirit Box", "DOTS Projector"], traits: ["No Footprints"] },
-        { name: "Phantom", evidence: ["Spirit Box", "Fingerprints", "DOTS Projector"], traits: ["Shy"] },
-        { name: "Poltergeist", evidence: ["Spirit Box", "Fingerprints", "Ghost Writing"], traits: [] },
-        { name: "Banshee", evidence: ["Ghost Orb", "Fingerprints", "DOTS Projector"], traits: ["Shy"] },
-        { name: "Jinn", evidence: ["EMF Level 5", "Freezing Temperatures", "Fingerprints"], traits: ["Fast When Seen"] },
-        { name: "Mare", evidence: ["Ghost Orb", "Spirit Box", "Ghost Writing"], traits: ["Hates Crucifix"] },
-        { name: "Revenant", evidence: ["Ghost Orb", "Ghost Writing", "Freezing Temperatures"], traits: ["Slow unless it sees you"] },
-        { name: "Shade", evidence: ["EMF Level 5", "Ghost Writing", "Freezing Temperatures"], traits: ["Shy"] },
-        { name: "Demon", evidence: ["Fingerprints", "Ghost Writing", "Freezing Temperatures"], traits: ["Hates Crucifix"] },
-        { name: "Yurei", evidence: ["Ghost Orb", "Freezing Temperatures", "DOTS Projector"], traits: ["Drains sanity faster"] },
-        { name: "Oni", evidence: ["EMF Level 5", "Freezing Temperatures", "DOTS Projector"], traits: ["More active with players"] },
-        { name: "Hantu", evidence: ["Fingerprints", "Ghost Orb", "Freezing Temperatures"], traits: ["Faster in cold rooms"] },
-        { name: "Goryo", evidence: ["EMF Level 5", "Fingerprints", "DOTS Projector"], traits: ["Only visible on camera"] },
-        { name: "Myling", evidence: ["EMF Level 5", "Fingerprints", "Ghost Writing"], traits: ["Quieter footsteps"] },
-        { name: "Onryo", evidence: ["Spirit Box", "Ghost Orb", "Freezing Temperatures"], traits: ["Triggered by fire"] },
-        { name: "The Twins", evidence: ["EMF Level 5", "Spirit Box", "Freezing Temperatures"], traits: ["Different activity locations"] },
-        { name: "Raiju", evidence: ["EMF Level 5", "Ghost Orb", "DOTS Projector"], traits: ["Faster near electronics"] },
-        { name: "Obake", evidence: ["EMF Level 5", "Ghost Orb", "Fingerprints"], traits: ["Rare fingerprints"] },
-        { name: "The Mimic", evidence: ["Spirit Box", "Fingerprints", "Freezing Temperatures"], traits: ["Mimics Others"] },
-        { name: "Moroi", evidence: ["Spirit Box", "Ghost Writing", "Freezing Temperatures"], traits: ["Curses players"] },
-        { name: "Deogen", evidence: ["Spirit Box", "Ghost Writing", "DOTS Projector"], traits: ["Sees through hiding"] },
-        { name: "Thaye", evidence: ["Ghost Orb", "Ghost Writing", "DOTS Projector"], traits: ["Ages over time"] },
-        { name: "The Mimic", evidence: ["Spirit Box", "Fingerprints", "Freezing Temperatures", "Ghost Orb"], traits: ["Mimics Others"] }
-      ];
-
-      const allEvidence = new Set();
-      const allTraits = new Set();
-      ghosts.forEach(g => {
-        g.evidence.forEach(e => allEvidence.add(e));
-        g.traits.forEach(t => allTraits.add(t));
-      });
-
-      function createChecklist(id, items, className, descriptions) {
-        const container = document.getElementById(id);
-        [...items].sort().forEach(item => {
-          const wrapper = document.createElement("div");
-          const label = document.createElement("label");
-          const input = document.createElement("input");
-          input.type = "checkbox";
-          input.value = item;
-          input.classList.add(className);
-          input.addEventListener("change", filterGhosts);
-          label.appendChild(input);
-          label.append(" " + item);
-
-          const desc = document.createElement("div");
-          desc.className = className === 'evidence' ? 'evidence-description' : 'trait-description';
-          desc.innerText = descriptions[item] || "No description available.";
-
-          wrapper.appendChild(label);
-          wrapper.appendChild(desc);
-          container.appendChild(wrapper);
-        });
-      }
-
-      function filterGhosts() {
-        const selectedEvidence = Array.from(document.querySelectorAll(".evidence:checked")).map(e => e.value);
-        const selectedTraits = Array.from(document.querySelectorAll(".trait:checked")).map(e => e.value);
-
-        const matches = ghosts.filter(g =>
-          selectedEvidence.every(ev => g.evidence.includes(ev)) &&
-          selectedTraits.every(tr => g.traits.includes(tr))
-        );
-
-        const resultDiv = document.getElementById("results");
-        if (matches.length) {
-          resultDiv.innerHTML = `<h3>Matching Ghosts:</h3><ul>${matches.map(g => `<li>${g.name}</li>`).join('')}</ul>`;
-        } else {
-          resultDiv.innerHTML = "<p>No ghosts match your selected evidence and traits.</p>";
-        }
-      }
-
-      createChecklist("evidence-section", allEvidence, "evidence", evidenceDescriptions);
-      createChecklist("traits-section", allTraits, "trait", traitDescriptions);
-    </script>
+  <script src="script.js"></script>
 </body>
 </html>
